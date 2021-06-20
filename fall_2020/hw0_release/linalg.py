@@ -16,7 +16,13 @@ def dot_product(a, b):
     """
     out = None
     ### YOUR CODE HERE
-    pass
+    a = a.flatten()
+    b = b.flatten()
+    assert a.size == b.size, "Size do not match"
+    
+    out = np.array([np.dot(a,b)])
+    # convert the 1D array to 2D array
+    out = out.reshape(out.shape[0],1)
     ### END YOUR CODE
     return out
 
@@ -35,12 +41,22 @@ def complicated_matrix_function(M, a, b):
     Returns:
         out: numpy matrix of shape (x, 1).
     """
-    out = None
-    ### YOUR CODE HERE
-    pass
+    
+    aT = a.T
+
+    Mh,Mw = M.shape
+    Ah,Aw = aT.shape
+    assert Mw == Ah, "Dimension is not matching for martix multiplication"     
+
+    out = np.empty([Mh,Aw], dtype=int)
+    
+    for i in range(Mh):
+        N = M[i,:]
+        out[i,:] = dot_product(N,a)
+    
     ### END YOUR CODE
 
-    return out
+    return dot_product(a,b) * out
 
 
 def eigen_decomp(M):
